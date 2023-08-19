@@ -134,7 +134,16 @@ def citas():
 
 @app.route('/consultas')
 def consultas():
-    return render_template('consultas.html')
+    if current_user:
+        id_paciente = current_user.id
+
+    consulta= mysql.connect.cursor()
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1')
+    conCon= consulta.fetchall()
+    #print(conAlbums)
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0')
+    ConCon1= consulta.fetchall()
+    return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
 
 @app.route('/nuevaconsulta')
 def nuevaconsulta():

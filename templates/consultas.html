@@ -35,59 +35,16 @@
         </thead>
     
         <tbody class="text-center divide-y divide-gray-200">
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio1
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor1</td>
-            <td class="px-4 py-2 text-gray-700">Consulta1</td>
-            <td class="px-4 py-2 text-gray-700">Fecha1</td>
-            <td class="px-4 py-2 text-gray-700">Hora1</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio2
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor2</td>
-            <td class="px-4 py-2 text-gray-700">Consulta2</td>
-            <td class="px-4 py-2 text-gray-700">Fecha2</td>
-            <td class="px-4 py-2 text-gray-700">Hora2</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio3
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor3</td>
-            <td class="px-4 py-2 text-gray-700">Consulta3</td>
-            <td class="px-4 py-2 text-gray-700">Fecha3</td>
-            <td class="px-4 py-2 text-gray-700">Hora3</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
+          {% for cita in lsConsulta %}
+                    <tr>
+                        <td class="px-4 py-2 text-gray-700">{{ cita[0] }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                        <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                        <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                        <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                        <td><a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                    </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
@@ -128,59 +85,16 @@
         </thead>
     
         <tbody class="text-center divide-y divide-gray-200">
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio1
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor1</td>
-            <td class="px-4 py-2 text-gray-700">Consulta1</td>
-            <td class="px-4 py-2 text-gray-700">Fecha1</td>
-            <td class="px-4 py-2 text-gray-700">Hora1</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio2
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor2</td>
-            <td class="px-4 py-2 text-gray-700">Consulta2</td>
-            <td class="px-4 py-2 text-gray-700">Fecha2</td>
-            <td class="px-4 py-2 text-gray-700">Hora2</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio3
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor3</td>
-            <td class="px-4 py-2 text-gray-700">Consulta3</td>
-            <td class="px-4 py-2 text-gray-700">Fecha3</td>
-            <td class="px-4 py-2 text-gray-700">Hora3</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
+          {% for cita in lsCon %}
+                    <tr>
+                        <td class="px-4 py-2 text-gray-700">{{ cita[0] }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                        <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                        <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                        <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                        <td><a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                    </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
