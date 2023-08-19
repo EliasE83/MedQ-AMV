@@ -153,6 +153,29 @@ def perfil():
 def nuevaconsulta():
     return render_template('nuevaconsulta.html')
 
+@app.route('/nuevaconsultaBD',methods=['GET','POST'])
+def nuevaconsultaBD():
+    if current_user:
+        id_paciente = current_user.id
+    
+    if request.method == 'POST':
+        cs= mysql.connection.cursor()
+        vFecha = request.form['fecha']
+        vHora=request.form['hora']
+        vSintomas=request.form['sintomas']
+        vAlergias=request.form['alergias']
+        vAntecedentes=request.form['antecedentes']
+        vTipoDolor=request.form['tipodolor']
+        vNivelDolor=request.form['niveldolor']    
+        vZona=request.form['zona']
+        cs.execute('insert into Consultas(id_paciente,id_zona,sintomas,tipo_dolor,nivel_dolor,fecha_consulta,alergias,antecedentes,Hora,estatus) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,1)',
+        (id_paciente,vZona,vSintomas,vTipoDolor,vNivelDolor,vFecha,vAlergias,vAntecedentes,vHora))
+        mysql.connection.commit()
+    flash('El registro fue agregado correctamente')
+    return redirect(url_for('nuevaconsulta'))
+    
+
+
 @app.route('/guardar')
 def guardar():
     return render_template('nuevaconsulta.html')
