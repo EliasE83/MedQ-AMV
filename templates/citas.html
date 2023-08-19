@@ -4,17 +4,13 @@
 
 <div class="flex justify-center px-16">
   <div class="container">
-    <div class="mt-4">
+    <div class="mb-4">
       <a href="https://citamedicadigital.imss.gob.mx/CMW/cmw?v=login"
-         class="inline-block rounded bg-blue-500 text-white px-4 py-2 text-sm font-medium hover:bg-blue-600">
+         class="inline-block rounded bg-indigo-600 px-5 py-3 text-xl font-medium text-white hover:bg-indigo-700 mb-3">
         Agendar Citas
       </a>
     </div>
-      <div class="overflow-x-auto">
-        <!-- Div para citas pendientes -->
-        <div class="mb-4">
-          <h2 class="text-xl font-semibold mb-2">Citas Pendientes</h2>
-          
+
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead class="text-center">
@@ -37,65 +33,23 @@
             <th class="px-4 py-2"></th>
           </tr>
         </thead>
-    
+
         <tbody class="text-center divide-y divide-gray-200">
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio1
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor1</td>
-            <td class="px-4 py-2 text-gray-700">Consultorio1</td>
-            <td class="px-4 py-2 text-gray-700">Fecha1</td>
-            <td class="px-4 py-2 text-gray-700">Hora1</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio2
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor2</td>
-            <td class="px-4 py-2 text-gray-700">Consultorio2</td>
-            <td class="px-4 py-2 text-gray-700">Fecha2</td>
-            <td class="px-4 py-2 text-gray-700">Hora2</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio3
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor3</td>
-            <td class="px-4 py-2 text-gray-700">Consultorio3</td>
-            <td class="px-4 py-2 text-gray-700">Fecha3</td>
-            <td class="px-4 py-2 text-gray-700">Hora3</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
+          {% for cita in listCitas %}
+            <tr>
+              <td class="px-4 py-2 font-medium text-gray-900">
+                {{ cita[0] }} <!-- Folio -->
+              </td>
+                <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+              </td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
-        </div>
     
         <!-- Div para historial de citas -->
         <div>
@@ -108,86 +62,45 @@
           </button>
         <div id="historialTable" class="hidden">
             
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-        <thead class="text-center">
-          <tr>
-            <th class="px-4 py-2 font-medium text-gray-900">
-              Folio
-            </th>
-            <th class="px-4 py-2 font-medium text-gray-900">
-              Doctor
-            </th>
-            <th class="px-4 py-2 font-medium text-gray-900">
-              ID Consultorio
-            </th>
-            <th class="px-4 py-2 font-medium text-gray-900">
-              Fecha
-            </th>
-            <th class="px-4 py-2 font-medium text-gray-900">
-              Hora
-            </th>
-            <th class="px-4 py-2"></th>
-          </tr>
-        </thead>
-    
-        <tbody class="text-center divide-y divide-gray-200">
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio1
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor1</td>
-            <td class="px-4 py-2 text-gray-700">Consultorio1</td>
-            <td class="px-4 py-2 text-gray-700">Fecha1</td>
-            <td class="px-4 py-2 text-gray-700">Hora1</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio2
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor2</td>
-            <td class="px-4 py-2 text-gray-700">Consultorio2</td>
-            <td class="px-4 py-2 text-gray-700">Fecha2</td>
-            <td class="px-4 py-2 text-gray-700">Hora2</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-    
-          <tr>
-            <td class="px-4 py-2 font-medium text-gray-900">
-              Folio3
-            </td>
-            <td class="px-4 py-2 text-gray-700">Doctor3</td>
-            <td class="px-4 py-2 text-gray-700">Consultorio3</td>
-            <td class="px-4 py-2 text-gray-700">Fecha3</td>
-            <td class="px-4 py-2 text-gray-700">Hora3</td>
-            <td class="px-4 py-2">
-              <a
-                href="#"
-                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+              <thead class="text-center">
+                <tr>
+                  <th class="px-4 py-2 font-medium text-gray-900">
+                    Folio
+                  </th>
+                  <th class="px-4 py-2 font-medium text-gray-900">
+                    Doctor
+                  </th>
+                  <th class="px-4 py-2 font-medium text-gray-900">
+                    ID Consultorio
+                  </th>
+                  <th class="px-4 py-2 font-medium text-gray-900">
+                    Fecha
+                  </th>
+                  <th class="px-4 py-2 font-medium text-gray-900">
+                    Hora
+                  </th>
+                  <th class="px-4 py-2"></th>
+                </tr>
+              </thead>
+      
+              <tbody class="text-center divide-y divide-gray-200">
+                {% for cita in listCitas0 %}
+                  <tr>
+                    <td class="px-4 py-2 font-medium text-gray-900">
+                      {{ cita[0] }} <!-- Folio -->
+                    </td>
+                    <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                    <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                    <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                    <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
           </div>
         </div>
       </div>
