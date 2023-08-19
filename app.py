@@ -125,7 +125,10 @@ def indexA():
 
 @app.route('/citas')
 def citas():
-    return render_template('citas.html')
+    cs = mysql.connection.cursor()
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id')
+    queryCitas = cs.fetchall()
+    return render_template('citas.html', listCitas = queryCitas)
 
 @app.route('/consultas')
 def consultas():
