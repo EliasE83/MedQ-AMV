@@ -108,6 +108,10 @@ def citas():
 def consultas():
     return render_template('consultas.html')
 
+@app.route('/nuevaconsulta')
+def nuevaconsulta():
+    return render_template('nuevaconsulta.html')
+
 
 #Ejecucion del Servidor en el puerto 5000
 if __name__ == '__main__':
