@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user,login_required, logout_user, current_user,UserMixin
+from datetime import datetime
 
 #Inicializacion del APP
 app = Flask(__name__)
@@ -53,7 +54,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('log'))
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=['POST'])
 def log():
@@ -113,9 +114,13 @@ def indexU():
 def indexM():
     return render_template('med.html')
 
+@app.route('/historicoreg')
+def historicoreg():
+    return render_template('historicoreg.html')
+
 @app.route('/indexA')
-def indexA():
-    return render_template('admin.html')
+def usuarios():
+    return render_template('usuarios.html')
 
 @app.route('/citas')
 def citas():
@@ -133,7 +138,6 @@ def citas():
 def consultas():
     if current_user:
         id_paciente = current_user.id
-
     consulta= mysql.connect.cursor()
     consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
     conCon= consulta.fetchall()
@@ -143,9 +147,15 @@ def consultas():
     return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
 
 
+
 @app.route('/perfil')
 def perfil():
-    return render_template('Uperfil.html')
+    id_paciente = current_user.id
+    cs = mysql.connection.cursor()
+    cs.execute('SELECT p.nombre,p.ap,p.am, TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()), p.correo FROM personas p INNER JOIN pacientes pa on pa.id_persona = p.id WHERE pa.id= %s', (id_paciente,))
+    queryUsr = cs.fetchall()
+    return render_template('Uperfil.html', listUsr=queryUsr)
+
 
 
 

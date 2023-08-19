@@ -1,0 +1,100 @@
+{% extends 'dashboardA.html' %}
+
+{% block body%}
+
+<div class="flex justify-center px-16">
+    <div class="container">
+        <div class="overflow-x-auto">
+          <!-- Div para citas pendientes -->
+          <div class="mb-4">
+            
+            <h2 class="text-xl font-semibold mb-2">Usuarios registrados</h2>
+            
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead class="text-center">
+            <tr>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Folio
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Doctor
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                ID Consulta
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Fecha
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Hora
+              </th>
+              <th class="px-4 py-2"></th>
+            </tr>
+          </thead>
+      
+          <tbody class="text-center divide-y divide-gray-200">
+            {% for cita in lsConsulta %}
+                      <tr>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[0] }}</td>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                          <td><a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                      </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+          </div>
+          <div class="mb-4">
+
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold mb-2">Medicos registrados</h2>
+                    <a href="/nuevomed" class="rounded bg-indigo-600 px-3 py-1 text-xl font-medium text-white hover:bg-indigo-700">Registrar medico</a>
+                </div>
+                
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead class="text-center">
+            <tr>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Nombre
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Apellido Paterno
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Apellido Materno
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Correo electronico
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Telefono
+              </th>
+              <th class="px-4 py-2"></th>
+            </tr>
+          </thead>
+      
+          <tbody class="text-center divide-y divide-gray-200">
+            {% for cita in lsConsulta %}
+                      <tr>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[0] }}</td>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                          <td><a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                      </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
