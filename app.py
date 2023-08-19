@@ -53,6 +53,11 @@ def load_user(id):
 def login():
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('log'))
+
 @app.route('/login', methods=['POST'])
 def log():
     if request.method == 'POST':
@@ -87,6 +92,24 @@ def log():
     else:
         print("Datos login incompletos")
         return render_template('login.html')
+    
+@app.route('/guardar',methods=['GET','POST'])
+def registro():
+    if request.method == 'POST':
+        cs= mysql.connection.cursor()
+        vNombre = request.form['txtNombre_guardar']
+        vApellido_paterno=request.form['txtApellidoPaterno_guardar']
+        vApellido_materno=request.form['txtApellidoMaterno_guardar']
+        vGenero=request.form['txtGenero']
+        vFechaNac=request.form['txtFechaNac']
+        vTelefono=request.form['txtTelefono']
+        vCorreo=request.form['txtCorreoElectronico_guardar']
+        vContra=request.form['txtContrasena_guardar']    
+        cs.execute('insert into Personas(nombre,ap,am,id_genero,fecha_nac,telefono,id_estatus,correo,contra) values(%s,%s,%s,%s,%s,%s,3,%s,%s)',
+        (vNombre,vApellido_paterno,vApellido_materno,vGenero,vFechaNac,vTelefono,vCorreo,vContra))
+        mysql.connection.commit()
+    flash('El registro fue agregado correctamente')
+    return redirect(url_for('login'))
 
 @app.route('/indexU')
 def indexU():
