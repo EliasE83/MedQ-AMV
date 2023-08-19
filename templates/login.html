@@ -79,7 +79,16 @@
               <input type="text" name="txtNombre_guardar" placeholder="Nombre" required />
               <input type="text" name="txtApellidoPaterno_guardar" placeholder="Apellido Paterno" required />
               <input type="text" name="txtApellidoMaterno_guardar" placeholder="Apellido Materno" required />
-              <input type="number" name="txtMatricula_guardar" placeholder="Matrícula" required />
+              <div class="mb-3">
+                <select class="form-select" name="txtGenero" required>
+                        <option selected>Seleccione el género</option>
+                        <option value="1">Hombre</option>
+                        <option value="2">Mujer</option>
+                        <option value="3">Otro</option>
+                </select>
+            </div>
+              <input type="date" name="txtFechaNac" placeholder="Fecha" required />
+              <input type="text" name="txtTelefono" placeholder="Teléfono" required />
               <input type="email" name="txtCorreoElectronico_guardar" placeholder="Correo electrónico" required />
               <input type="password" name="txtContrasena_guardar" placeholder="Contraseña" required />
               <button type="submit" class="btn_sign_up" onclick="change_to_sign_up()">Registrarte</button>
