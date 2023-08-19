@@ -5,22 +5,107 @@
 <div class="flex justify-center px-16">
     <div class="container">
         <div class="overflow-x-auto">
+
+            <form action="">
             <div class="row">
+
                 <div class="col-md-6">
+                    <div class="mt-3 mb-3"><h1>Consulta Médica</h1></div>
 
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Ingrese sus síntomas" id="floatingTextarea2" style="height: 100px"></textarea>
-                        <label for="floatingTextarea2">Síntomas</label>
+                        <textarea class="form-control" name="" placeholder="Ingrese sus síntomas" id="floatingTextarea1" style="height: 100px"></textarea>
+                        <label for="floatingTextarea1">Síntomas</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="" placeholder="Ingrese sus alergías" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Alergías</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="" placeholder="Ingrese sus antecedentes" id="floatingTextarea3" style="height: 100px"></textarea>
+                        <label for="floatingTextarea3">Antecedentes médicos</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="" placeholder="Ingrese sus medicamentos" id="floatingTextarea4" style="height: 100px"></textarea>
+                        <label for="floatingTextarea4">Medicamentos recetados</label>
+                    </div>
+                    
+
+                    <div class="mb-3">
+                        <select name="" class="form-select form-select-lg mb-3">
+                            <option value="" selected>Tipo de dolor</option>
+                            <option value="">Punzante</option>
+                            <option value="">Palpitante</option>
+                            <option value="">Agudo</option>
+                            <option value="">Crónico</option>
+
+                        </select>
                     </div>
                     <div class="mb-3">
-
+                        <label for="myRange" class="form-label">Nivel de dolor</label>
+                        <p>Valor seleccionado: <span id="slider-value">1</span></p>
+                        <input type="range" class="form-range" min="1" max="10" id="myRange">
+                        
+                        
                     </div>
                 </div>
-                <div class="col-md-6"></div>
+
+                <div class="col-md-6">
+                    <div class="mt-3 mb-3 text-center">
+                        <h3>Zona de dolor</h3>
+                        <p>Seleccione dónde le duele:</p>
+                    </div>
+
+                    <div>
+                        <img src="{{ url_for('static', filename='silueta.jpg') }}" alt="" usemap="#image-map">
+
+                        <map name="image-map">
+                            <area target="" alt="Cabeza" title="Cabeza" href="" onclick="informacionZona('Cabeza')" coords="466,123,368,25" shape="rect">
+                            <area target="" alt="Cuello" title="Cuello" href="" onclick="informacionZona('Cuello')" coords="387,123,444,149" shape="rect">
+                            <area target="" alt="Pecho" title="Pecho" href="" onclick="informacionZona('Pecho')" coords="333,154,502,346" shape="rect">
+                            <area target="" alt="Abdomen" title="Abdomen" href="" onclick="informacionZona('Abdomen')" coords="337,346,501,445" shape="rect">
+                            <area target="" alt="Pelvis" title="Pelvis" href="" onclick="informacionZona('Pelvis')" coords="321,484,415,535,511,494,501,446,333,444" shape="poly">
+                            <area target="" alt="Muslo Der" title="Muslo Der" href="" onclick="informacionZona('Muslo Der')" coords="323,484,416,537,384,726,330,706" shape="poly">
+                            <area target="" alt="Pierna Der" title="Pierna Der" href="" onclick="informacionZona('Pierna Der')" coords="324,706,321,927,369,945,388,729" shape="poly">
+                            <area target="" alt="Pie Der" title="Pie Der" href="" onclick="informacionZona('Pie Der')" coords="273,987,316,998,371,950,322,929" shape="poly">
+                            <area target="" alt="Muslo Izq" title="Muslo Izq" href="" onclick="informacionZona('Muslo Izq')" coords="417,536,513,493,508,702,447,729" shape="poly">
+                            <area target="" alt="Pierna Izq" title="Pierna Izq" href="" onclick="informacionZona('Pierna Izq')" coords="445,733,508,705,507,925,462,933,447,811" shape="poly">
+                            <area target="" alt="Pie Izq" title="Pie Izq" href="" onclick="informacionZona('Pie Izq')" coords="454,937,507,924,556,985,521,999,468,963" shape="poly">
+                            <area target="" alt="Brazo Der" title="Brazo Der" href="" onclick="informacionZona('Brazo Der')" coords="330,178,288,193,264,339,311,356,329,303" shape="poly">
+                            <area target="" alt="Antebrazo Der" title="Antebrazo Der" href="" onclick="informacionZona('Antebrazo Der')" coords="214,464,245,484,312,357,261,339" shape="poly">
+                            <area target="" alt="Mano Der" title="Mano Der" href="" onclick="informacionZona('Mano Der')" coords="215,465,173,515,216,573,251,488" shape="poly">
+                            <area target="" alt="Brazo Izq" title="Brazo Izq" href="" onclick="informacionZona('Brazo Izq')" coords="502,173,537,190,567,329,523,357,504,299" shape="poly">
+                            <area target="" alt="Antebrazo Izq" title="Antebrazo Izq" href="" onclick="informacionZona('Antebrazo Izq')" coords="524,359,568,329,617,469,583,485" shape="poly">
+                            <area target="" alt="Mano Izq" title="Mano Izq" href=""  onclick="informacionZona('Mano Izq')" coords="584,487,618,469,678,525,617,570" shape="poly">
+                        </map>
+                    
+                </div>
+
             </div>
+        </form>
         </div>
     </div>
 </div>
 
+<script>
+    const slider = document.getElementById('myRange');
+    const sliderValue = document.getElementById('slider-value');
+
+    slider.addEventListener('input', () => {
+      const value = slider.value;
+      sliderValue.textContent = value;
+      levelSelect.value = value;
+    });
+
+    function informacionZona(zona) {
+      // Aquí puedes agregar la lógica para enviar información según la zona clicada
+      // por ejemplo, mostrar un mensaje, redirigir a otra página, etc.
+      alert("Has hecho clic en la zona " + zona);
+    }
+
+
+</script>
 
 {% endblock %}
