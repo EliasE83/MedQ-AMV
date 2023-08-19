@@ -112,7 +112,7 @@ def indexU():
 
 @app.route('/indexM')
 def indexM():
-    return render_template('med.html')
+    return render_template('medico.html')
 
 @app.route('/historicoreg')
 def historicoreg():
@@ -120,7 +120,14 @@ def historicoreg():
 
 @app.route('/indexA')
 def usuarios():
-    return render_template('usuarios.html')
+    return render_template('admin.html')
+
+@app.route('/admmed')
+def medicaadm():
+    cs = mysql.connection.cursor()
+    cs.execute('select p.id, p.nombre, p.ap, p.am, g.descripcion, p.fecha_nac, p.telefono, p.correo, p.contra from personas p inner join generos g on p.id_genero = g.id where id_estatus=1')
+    medico = cs.fetchall()
+    return render_template('citas.html', listmedico = medico)
 
 @app.route('/citas')
 def citas():

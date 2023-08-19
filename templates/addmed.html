@@ -1,0 +1,59 @@
+{% extends 'dashboardA.html' %}
+
+{% block body%}
+
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      <thead class="text-center">
+        <tr>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            ID
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Nombre
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Apellido Paterno
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Apellido Materno
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Género
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Fecha de Nacimiento
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Teléfono
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Correo
+          </th>
+          <th class="px-4 py-2 font-medium text-gray-900">
+            Contraseña
+          </th>
+          <th class="px-4 py-2"></th>
+        </tr>
+      </thead>
+  
+      <tbody class="text-center divide-y divide-gray-200">
+        {% for medico in listmedico %}
+                  <tr>
+                      <td class="px-4 py-2 text-gray-700">{{ medico[0] }}</td> <!-- ID -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[1] }}</td> <!-- Nombre -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[2] }}</td> <!-- Apellido Paterno -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[3] }}</td> <!-- Apellido Materno -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[4] }}</td> <!-- Género -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[5] }}</td> <!-- Fecha de Nacimiento -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[6] }}</td> <!-- Teléfono -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[7] }}</td> <!-- Correo -->
+                      <td class="px-4 py-2 text-gray-700">{{ medico[8] }}</td> <!-- Contraseña -->
+                      <td><a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                  </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
