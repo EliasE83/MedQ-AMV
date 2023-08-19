@@ -152,7 +152,7 @@ def consultas():
 def perfil():
     id_paciente = current_user.id
     cs = mysql.connection.cursor()
-    cs.execute('SELECT nombre,ap,am, TIMESTAMPDIFF(YEAR, fecha_nac, CURDATE()), correo FROM personas WHERE id = %s', (id_paciente,))
+    cs.execute('SELECT p.nombre,p.ap,p.am, TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()), p.correo FROM personas p INNER JOIN pacientes pa on pa.id_persona = p.id WHERE pa.id= %s', (id_paciente,))
     queryUsr = cs.fetchall()
     return render_template('Uperfil.html', listUsr=queryUsr)
 
