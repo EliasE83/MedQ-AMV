@@ -68,9 +68,6 @@ def log():
         query = 'SELECT id, correo, contra, id_estatus,nombre FROM Personas WHERE correo = %s and contra = %s'
         cursor.execute(query, (rfc, password))
         persona = cursor.fetchone()
-    
-        print("Metodo: login(), rfc y pass que llegan desde front: RFC {} pass {}".format(rfc, persona))
-        print("Metodo: rfc(), antes de validar rfc y pass")
         if persona:
             print("Metodo: login(), rfc y pass correctos")
             user = User(id=persona[0], rfc=persona[1], password=persona[2], rol=persona[3],nombre=persona[4])
@@ -144,6 +141,13 @@ def consultas():
     consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0')
     ConCon1= consulta.fetchall()
     return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
+
+
+@app.route('/perfil')
+def perfil():
+    return render_template('Uperfil.html')
+
+
 
 @app.route('/nuevaconsulta')
 def nuevaconsulta():
