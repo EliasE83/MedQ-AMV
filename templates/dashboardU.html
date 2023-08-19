@@ -19,9 +19,9 @@
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Inicio</a>
-                <a href="#" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Citas</a>
-                <a href="#" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Consultas</a>
+                <a href="/" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Inicio</a>
+                <a href="/citas" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Citas</a>
+                <a href="/consultas" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Consultas</a>
               </div>
             </div>
           </div>
@@ -98,7 +98,8 @@
       </div>
     </main>
   </div>  
-  
+  {% block body %}
+  {% endblock %}
 </body>
 </html>
 

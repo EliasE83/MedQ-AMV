@@ -50,20 +50,24 @@ def load_user(id):
 
 @app.route('/')
 def login():
-    return render_template('login.html')
-
-@app.route('/login')
-def log():
-    
-    if ():
-        return render_template('admin.html')
-    elif ():
-        return render_template('med.html')
     return render_template('user.html')
 
-@app.route('/indexU')
-def indexU():
-    return render_template('/vistas_principales/user.html')
+# @app.route('/usuarioCitas')
+# def citas():
+#     return render_template('citas.html')
+
+# @app.route('/login')
+# def log():
+    
+#     if ():
+#         return render_template('admin.html')
+#     elif ():
+#         return render_template('med.html')
+#     return render_template('user.html')
+
+# @app.route('/indexU')
+# def indexU():
+#     return render_template('user.html')
 
 @app.route('/indexM')
 def indexM():
@@ -75,11 +79,11 @@ def indexA():
 
 @app.route('/citas')
 def citas():
-    return render_template('/vistas_principales/citas.html')
+    return render_template('citas.html')
 
 @app.route('/consultas')
 def consultas():
-    return render_template('/vistas_principales/consultas.html')
+    return render_template('consultas.html')
 
 
 #Ejecucion del Servidor en el puerto 5000
