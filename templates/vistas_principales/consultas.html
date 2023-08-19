@@ -1,0 +1,58 @@
+{% extends '/dashboards/dashboardU.html' %}
+
+{% block body%}
+
+
+<div class="min-h-full">
+
+
+<div class="overflow-x-auto">
+
+  
+  <div class="row text-center">
+      <div class="col-md-12">
+          <div class="mb-2 mt-2">
+              <h1 class="page-header">
+                  MedQ Asistente Virtual
+              </h1>
+          </div>
+          <div class="mb-2 mt-2">
+              <form action="#" method="POST">
+                <div class="mb-3">
+                    <input type="text" class="form-control"  required readonly>
+                    <input type="text" class="form-control" name="Medico" hidden required readonly>
+                </div>
+                <div class="mb-3">
+                    
+                    <input type="text" class="form-control" name="txtNombre" placeholder="Nombre" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="txtAP" placeholder="Apellido Paterno" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="txtAM" placeholder="Apellido Materno" required>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="date" name="txtNacimiento" placeholder="Fecha de Nacimiento" required>                        
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="txtEnfermedades" placeholder="Enfermedades Crónicas" required>                        
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="txtAlergias" placeholder="Alergias" required>                        
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" name="txtAntecedentes" placeholder="Antecedentes" required>                        
+                </div>
+                <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary">Guardar</button></div>
+        
+            </form>
+          </div>
+      </div>
+  </div>
+  
+  </div>
+</div>
+
+  
+{% endblock %}
