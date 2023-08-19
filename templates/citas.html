@@ -40,17 +40,10 @@
               <td class="px-4 py-2 font-medium text-gray-900">
                 {{ cita[0] }} <!-- Folio -->
               </td>
-              <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
-              <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
-              <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
-              <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
-              <td class="px-4 py-2">
-                <a
-                  href="#"
-                  class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                >
-                  View
-                </a>
+                <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
               </td>
             </tr>
           {% endfor %}
@@ -94,7 +87,7 @@
               </thead>
       
               <tbody class="text-center divide-y divide-gray-200">
-                {% for cita in listCitas %}
+                {% for cita in listCitas0 %}
                   <tr>
                     <td class="px-4 py-2 font-medium text-gray-900">
                       {{ cita[0] }} <!-- Folio -->
@@ -103,14 +96,6 @@
                     <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
                     <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
                     <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
-                    <td class="px-4 py-2">
-                      <a
-                        href="#"
-                        class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
-                      >
-                        View
-                      </a>
-                    </td>
                   </tr>
                 {% endfor %}
               </tbody>
