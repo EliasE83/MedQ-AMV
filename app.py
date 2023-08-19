@@ -17,11 +17,12 @@ mysql = MySQL(app)
 #login
 
 class User(UserMixin):
-    def __init__(self, id, rfc, password, rol):
+    def __init__(self, id, rfc, password, rol,nombre):
         self.id = id
         self.rfc = rfc
         self.password = password
         self.rol = rol
+        self.nombre = nombre
 
     def get_id(self):
         return str(self.id)
@@ -35,14 +36,14 @@ def load_user(id):
     print("este es mi id: " + id)
     
     cursor = mysql.connection.cursor() 
-    cursor.execute('SELECT id, correo, contra, id_estatus FROM Personas WHERE id = %s', (id,))
+    cursor.execute('SELECT id, correo, contra, id_estatus, nombre FROM Personas WHERE id = %s', (id,))
     persona = cursor.fetchone()
     if persona:
         print("Metodo: load_user(id), el usuario si coincide.")
 
-        print("Mi contra"+persona[2])
+
         
-        return User(id=persona[0], rfc=persona[1],password = persona[2], rol=persona[3])
+        return User(id=persona[0], rfc=persona[1],password = persona[2], rol=persona[3],nombre=persona[4])
     
     return None
 
@@ -50,24 +51,46 @@ def load_user(id):
 
 @app.route('/')
 def login():
-    return render_template('user.html')
+    return render_template('login.html')
 
-# @app.route('/usuarioCitas')
-# def citas():
-#     return render_template('citas.html')
+@app.route('/login', methods=['POST'])
+def log():
+    if request.method == 'POST':
+        rfc = request.form['txtCorreo']
+        password = request.form['txtContra']
 
-# @app.route('/login')
-# def log():
+        cursor = mysql.connection.cursor()
+        query = 'SELECT id, correo, contra, id_estatus,nombre FROM Personas WHERE correo = %s and contra = %s'
+        cursor.execute(query, (rfc, password))
+        persona = cursor.fetchone()
     
-#     if ():
-#         return render_template('admin.html')
-#     elif ():
-#         return render_template('med.html')
-#     return render_template('user.html')
+        print("Metodo: login(), rfc y pass que llegan desde front: RFC {} pass {}".format(rfc, persona))
+        print("Metodo: rfc(), antes de validar rfc y pass")
+        if persona:
+            print("Metodo: login(), rfc y pass correctos")
+            user = User(id=persona[0], rfc=persona[1], password=persona[2], rol=persona[3],nombre=persona[4])
+            if (persona[3] == 1):
+                flash('CONECTADO')
+                login_user(user)
+                return redirect(url_for('indexA'))
+            elif(persona[3]==2):
+                flash('CONECTADO')
+                login_user(user)
+                return redirect(url_for('indexM'))
+            flash('CONECTADO')
+            login_user(user)
+            return redirect(url_for('indexU'))
+        else:
+            print("Usuario o Contraseña Incorrectas")
+            flash('Usuario o Contraseña Incorrectas')
+            return render_template('login.html')
+    else:
+        print("Datos login incompletos")
+        return render_template('login.html')
 
-# @app.route('/indexU')
-# def indexU():
-#     return render_template('user.html')
+@app.route('/indexU')
+def indexU():
+    return render_template('user.html')
 
 @app.route('/indexM')
 def indexM():

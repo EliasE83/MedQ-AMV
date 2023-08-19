@@ -19,7 +19,7 @@
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="/" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Inicio</a>
+                <a href="/indexU" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Inicio</a>
                 <a href="/citas" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Citas</a>
                 <a href="/consultas" class="text-white hover:bg-blue-600 hover:text-gray-300 rounded-md px-3 py-2 text-sm font-medium">Consultas</a>
               </div>
@@ -70,7 +70,7 @@
   
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900"><!--CAMBIAR SEGUN EL NOMBRE DEL USUARIO-->NOMBRE USUARIO</h1>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900"><!--CAMBIAR SEGUN EL NOMBRE DEL USUARIO-->{{ current_user.nombre }}</h1>
       </div>
     </header>
     <main>
