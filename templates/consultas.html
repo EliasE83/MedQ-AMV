@@ -2,57 +2,205 @@
 
 {% block body%}
 
-
-<div class="min-h-full">
-
-
-<div class="overflow-x-auto">
-
-  
-  <div class="row text-center">
-      <div class="col-md-12">
-          <div class="mb-2 mt-2">
-              <h1 class="page-header">
-                  MedQ Asistente Virtual
-              </h1>
+<div class="flex justify-center px-16">
+  <div class="container">
+      <div class="overflow-x-auto">
+        <!-- Div para citas pendientes -->
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold mb-2">Tickets de consultas virtuales</h2>
+          
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+        <thead class="text-center">
+          <tr>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Folio
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Doctor
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              ID Consulta
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Fecha
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Hora
+            </th>
+            <th class="px-4 py-2"></th>
+          </tr>
+        </thead>
+    
+        <tbody class="text-center divide-y divide-gray-200">
+          <tr>
+            <td class="px-4 py-2 font-medium text-gray-900">
+              Folio1
+            </td>
+            <td class="px-4 py-2 text-gray-700">Doctor1</td>
+            <td class="px-4 py-2 text-gray-700">Consulta1</td>
+            <td class="px-4 py-2 text-gray-700">Fecha1</td>
+            <td class="px-4 py-2 text-gray-700">Hora1</td>
+            <td class="px-4 py-2">
+              <a
+                href="#"
+                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+    
+          <tr>
+            <td class="px-4 py-2 font-medium text-gray-900">
+              Folio2
+            </td>
+            <td class="px-4 py-2 text-gray-700">Doctor2</td>
+            <td class="px-4 py-2 text-gray-700">Consulta2</td>
+            <td class="px-4 py-2 text-gray-700">Fecha2</td>
+            <td class="px-4 py-2 text-gray-700">Hora2</td>
+            <td class="px-4 py-2">
+              <a
+                href="#"
+                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+    
+          <tr>
+            <td class="px-4 py-2 font-medium text-gray-900">
+              Folio3
+            </td>
+            <td class="px-4 py-2 text-gray-700">Doctor3</td>
+            <td class="px-4 py-2 text-gray-700">Consulta3</td>
+            <td class="px-4 py-2 text-gray-700">Fecha3</td>
+            <td class="px-4 py-2 text-gray-700">Hora3</td>
+            <td class="px-4 py-2">
+              <a
+                href="#"
+                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        </div>
+    
+        <!-- Div para historial de citas -->
+        <div>
+          <h2 class="text-xl font-semibold mb-2">Historial de consultas virtuales</h2>
+          <button
+            id="toggleHistorial"
+            class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+          >
+            Mostrar Historial
+          </button>
+          <div id="historialTable" class="hidden">
+            
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+        <thead class="text-center">
+          <tr>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Folio
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Doctor
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              ID Consulta
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Fecha
+            </th>
+            <th class="px-4 py-2 font-medium text-gray-900">
+              Hora
+            </th>
+            <th class="px-4 py-2"></th>
+          </tr>
+        </thead>
+    
+        <tbody class="text-center divide-y divide-gray-200">
+          <tr>
+            <td class="px-4 py-2 font-medium text-gray-900">
+              Folio1
+            </td>
+            <td class="px-4 py-2 text-gray-700">Doctor1</td>
+            <td class="px-4 py-2 text-gray-700">Consulta1</td>
+            <td class="px-4 py-2 text-gray-700">Fecha1</td>
+            <td class="px-4 py-2 text-gray-700">Hora1</td>
+            <td class="px-4 py-2">
+              <a
+                href="#"
+                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+    
+          <tr>
+            <td class="px-4 py-2 font-medium text-gray-900">
+              Folio2
+            </td>
+            <td class="px-4 py-2 text-gray-700">Doctor2</td>
+            <td class="px-4 py-2 text-gray-700">Consulta2</td>
+            <td class="px-4 py-2 text-gray-700">Fecha2</td>
+            <td class="px-4 py-2 text-gray-700">Hora2</td>
+            <td class="px-4 py-2">
+              <a
+                href="#"
+                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+    
+          <tr>
+            <td class="px-4 py-2 font-medium text-gray-900">
+              Folio3
+            </td>
+            <td class="px-4 py-2 text-gray-700">Doctor3</td>
+            <td class="px-4 py-2 text-gray-700">Consulta3</td>
+            <td class="px-4 py-2 text-gray-700">Fecha3</td>
+            <td class="px-4 py-2 text-gray-700">Hora3</td>
+            <td class="px-4 py-2">
+              <a
+                href="#"
+                class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+              >
+                View
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
           </div>
-          <div class="mb-2 mt-2">
-              <form action="#" method="POST">
-                <div class="mb-3">
-                    <input type="text" class="form-control"  required readonly>
-                    <input type="text" class="form-control" name="Medico" hidden required readonly>
-                </div>
-                <div class="mb-3">
-                    
-                    <input type="text" class="form-control" name="txtNombre" placeholder="Nombre" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" name="txtAP" placeholder="Apellido Paterno" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" name="txtAM" placeholder="Apellido Materno" required>
-                </div>
-                <div class="mb-3">
-                    <input class="form-control" type="date" name="txtNacimiento" placeholder="Fecha de Nacimiento" required>                        
-                </div>
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="txtEnfermedades" placeholder="Enfermedades Crónicas" required>                        
-                </div>
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="txtAlergias" placeholder="Alergias" required>                        
-                </div>
-                <div class="mb-3">
-                    <input class="form-control" type="text" name="txtAntecedentes" placeholder="Antecedentes" required>                        
-                </div>
-                <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary">Guardar</button></div>
-        
-            </form>
-          </div>
+        </div>
       </div>
+    </div>
+    
+    <script>
+      // Script para ocultar/mostrar el historial al hacer clic en el botón
+      const toggleButton = document.getElementById("toggleHistorial");
+      const historialTable = document.getElementById("historialTable");
+    
+      toggleButton.addEventListener("click", () => {
+        historialTable.classList.toggle("hidden");
+        if (historialTable.classList.contains("hidden")) {
+          toggleButton.textContent = "Mostrar Historial";
+        } else {
+          toggleButton.textContent = "Ocultar Historial";
+        }
+      });
+    </script>
   </div>
-  
-  </div>
-</div>
 
-  
 {% endblock %}
