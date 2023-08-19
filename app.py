@@ -37,7 +37,7 @@ def load_user(id):
     print("este es mi id: " + id)
     
     cursor = mysql.connection.cursor() 
-    cursor.execute('SELECT Pacientes.id, Personas.correo, Personas.contra, Personas.id_estatus, Personas.nombre FROM Personas inner join Pacientes on Pacientes.id_persona = Personas.id WHERE Pacientes.id = %s', (id,))
+    cursor.execute('SELECT id, correo, contra, id_estatus, nombre FROM Personas WHERE id = %s', (id,))
     persona = cursor.fetchone()
     if persona:
         print("Metodo: load_user(id), el usuario si coincide.")
@@ -63,7 +63,7 @@ def log():
         password = request.form['txtContra']
 
         cursor = mysql.connection.cursor()
-        query = 'SELECT Pacientes.id, Personas.correo, Personas.contra, Personas.id_estatus,Personas.nombre FROM Personas inner join Pacientes on Pacientes.id_persona = Personas.id WHERE Personas.correo = %s and Personas.contra = %s'
+        query = 'SELECT id, correo, contra, id_estatus,nombre FROM Personas WHERE correo = %s and contra = %s'
         cursor.execute(query, (rfc, password))
         persona = cursor.fetchone()
         if persona:
@@ -128,9 +128,12 @@ def citas():
         id_paciente = current_user.id
     
     cs = mysql.connection.cursor()
-    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
+    cs.execute('select Pacientes.id from Pacientes inner join Personas on Personas.id = Pacientes.id_persona where Personas.id = '+str(id_paciente))
+    var = cs.fetchone()
+
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente =%s',(var))
     queryCitas = cs.fetchall()
-    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente =%s',(var))
     queryCitas0 = cs.fetchall()
     return render_template('citas.html', listCitas = queryCitas, listCitas0 = queryCitas0)
 
@@ -139,10 +142,12 @@ def consultas():
     if current_user:
         id_paciente = current_user.id
     consulta= mysql.connect.cursor()
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
+    consulta.execute('select Pacientes.id from Pacientes inner join Personas on Personas.id = Pacientes.id_persona where Personas.id = '+str(id_paciente))
+    var = consulta.fetchone()
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente =%s',(var))
     conCon= consulta.fetchall()
     #print(conAlbums)
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente =%s',(var))
     ConCon1= consulta.fetchall()
     return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
 
@@ -152,7 +157,7 @@ def consultas():
 def perfil():
     id_paciente = current_user.id
     cs = mysql.connection.cursor()
-    cs.execute('SELECT p.nombre,p.ap,p.am, TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()), p.correo FROM personas p INNER JOIN pacientes pa on pa.id_persona = p.id WHERE pa.id= %s', (id_paciente,))
+    cs.execute('SELECT nombre,ap,am, TIMESTAMPDIFF(YEAR, fecha_nac, CURDATE()), correo FROM personas WHERE id= %s', (id_paciente,))
     queryUsr = cs.fetchall()
     return render_template('Uperfil.html', listUsr=queryUsr)
 
