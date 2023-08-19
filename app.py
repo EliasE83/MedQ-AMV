@@ -19,6 +19,14 @@ mysql = MySQL(app)
 def login():
     return render_template('login.html')
 
+@app.route('/login')
+def log():
+    
+    if ():
+        return render_template('admin.html')
+    elif ():
+        return render_template('med.html')
+    return render_template('user.html')
 
 #Ejecucion del Servidor en el puerto 5000
 if __name__ == '__main__':
