@@ -114,11 +114,11 @@ def indexU():
 
 @app.route('/indexM')
 def indexM():
-    return render_template('/vistas_principales/med.html')
+    return render_template('med.html')
 
 @app.route('/indexA')
 def indexA():
-    return render_template('/vistas_principales/admin.html')
+    return render_template('admin.html')
 
 @app.route('/citas')
 def citas():
