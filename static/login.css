@@ -159,7 +159,7 @@
   }
   
   .btn_login {
-    background-color: #26c6da;
+    background-color: #26c6da !important;
     border: none;
     padding: 10px;
     width: 200px;
@@ -200,7 +200,7 @@
   }
   
   .btn_sign_up {
-    background-color: #ef5350;
+    background-color: #ef5350 !important;
     border: none;
     padding: 10px;
     width: 200px;
