@@ -114,9 +114,13 @@ def indexU():
 def indexM():
     return render_template('med.html')
 
+@app.route('/historicoreg')
+def historicoreg():
+    return render_template('historicoreg.html')
+
 @app.route('/indexA')
-def indexA():
-    return render_template('admin.html')
+def usuarios():
+    return render_template('usuarios.html')
 
 @app.route('/citas')
 def citas():
