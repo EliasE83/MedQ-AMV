@@ -1,4 +1,12 @@
-{% extends 'dashboardU.html' %}
+{% if current_user.rol == 1 %}
+    {% set variable = 'dashboardA.html' %}
+{% elif current_user.rol == 2 %}
+    {% set variable = 'dashboardM.html' %}
+{% elif current_user.rol == 3 %}
+    {% set variable = 'dashboardU.html' %}
+{% endif %}
+
+{% extends variable %}
 
 {% block body%}
 

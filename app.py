@@ -61,7 +61,7 @@ def load_user(id):
     print("este es mi id: " + id)
     
     cursor = mysql.connection.cursor() 
-    cursor.execute('SELECT Pacientes.id, Personas.correo, Personas.contra, Personas.id_estatus, Personas.nombre FROM Personas inner join Pacientes on Pacientes.id_persona = Personas.id WHERE Pacientes.id = %s', (id,))
+    cursor.execute('SELECT id, correo, contra, id_estatus, nombre FROM Personas WHERE id = %s', (id,))
     persona = cursor.fetchone()
     if persona:
         print("Metodo: load_user(id), el usuario si coincide.")
@@ -87,7 +87,7 @@ def log():
         password = request.form['txtContra']
 
         cursor = mysql.connection.cursor()
-        query = 'SELECT Pacientes.id, Personas.correo, Personas.contra, Personas.id_estatus,Personas.nombre FROM Personas inner join Pacientes on Pacientes.id_persona = Personas.id WHERE Personas.correo = %s and Personas.contra = %s'
+        query = 'SELECT id, correo, contra, id_estatus,nombre FROM Personas WHERE Personas.correo = %s and Personas.contra = %s'
         cursor.execute(query, (rfc, password))
         persona = cursor.fetchone()
         if persona:
@@ -136,7 +136,14 @@ def indexU():
 
 @app.route('/indexM')
 def indexM():
-    return render_template('med.html')
+    consulta= mysql.connect.cursor()
+
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_doctor =3')
+    conCon= consulta.fetchall()
+    #print(conAlbums)
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0')
+    ConCon1= consulta.fetchall()
+    return render_template('medico.html',lsConsulta = conCon,lsCon = ConCon1)
 
 @app.route('/historicoreg')
 def historicoreg():
@@ -152,21 +159,44 @@ def citas():
         id_paciente = current_user.id
     
     cs = mysql.connection.cursor()
-    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
+    consulta= mysql.connect.cursor()
+    consulta.execute('select Pacientes.id from Pacientes inner join Personas on Personas.id = Pacientes.id_persona where Personas.id='+str(id_paciente))
+    var= consulta.fetchone()
+    print(var)
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente =%s',(var,))
     queryCitas = cs.fetchall()
-    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente =%s',(var,))
     queryCitas0 = cs.fetchall()
     return render_template('citas.html', listCitas = queryCitas, listCitas0 = queryCitas0)
+
+@app.route('/citasMedico')
+def citasMedico():
+    if current_user:
+        id_doc = current_user.id
+    
+    cs = mysql.connection.cursor()
+    consulta= mysql.connect.cursor()
+    consulta.execute('select Medicos.id from Medicos inner join Personas on Personas.id = Medicos.id_persona where Personas.id='+str(id_doc))
+    var= consulta.fetchone()
+    print(var)
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_doctor =%s',(var,))
+    queryCitas = cs.fetchall()
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_doctor =%s',(var,))
+    queryCitas0 = cs.fetchall()
+    return render_template('citasMedico.html', listCitas = queryCitas, listCitas0 = queryCitas0)
 
 @app.route('/consultas')
 def consultas():
     if current_user:
         id_paciente = current_user.id
     consulta= mysql.connect.cursor()
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
+    consulta.execute('select Pacientes.id from Pacientes inner join Personas on Personas.id = Pacientes.id_persona where Personas.id = '+str(id_paciente))
+    var= consulta.fetchone()
+    
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente =%s',(var,))
     conCon= consulta.fetchall()
     #print(conAlbums)
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente =%s',(var,))
     ConCon1= consulta.fetchall()
     return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
 
@@ -176,21 +206,31 @@ def consultas():
 def perfil():
     id_paciente = current_user.id
     cs = mysql.connection.cursor()
-    cs.execute('SELECT p.nombre,p.ap,p.am, TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()), p.correo FROM personas p INNER JOIN pacientes pa on pa.id_persona = p.id WHERE pa.id= %s', (id_paciente,))
+    cs.execute('SELECT nombre,ap,am, TIMESTAMPDIFF(YEAR, fecha_nac, CURDATE()), correo FROM personas WHERE id= %s', (id_paciente,))
     queryUsr = cs.fetchall()
     return render_template('Uperfil.html', listUsr=queryUsr)
 
-@app.route('/infconsulta')
-def infconsulta():
+@app.route('/infconsulta/<id>')
+def infconsulta(id):
     if current_user:
         id_paciente = current_user.id
     consulta= mysql.connect.cursor()
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
+    consulta.execute('select Consultas.id,personas.nombre, personas.ap,personas.am,pacientes.nss,TIMESTAMPDIFF(YEAR, personas.fecha_nac, CURDATE()),pacientes.estatura,pacientes.peso, consultas.sintomas,consultas.diagnostico,consultas.medicoVerifica from consultas inner join pacientes on pacientes.id = consultas.id_paciente inner join personas on pacientes.id_persona = personas.id where consultas.id = %s;', (id,))
     conCon= consulta.fetchall()
     #print(conAlbums)
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
-    ConCon1= consulta.fetchall()
-    return render_template('infconsulta.html',lsConsulta = conCon,lsCon = ConCon1)
+    
+    return render_template('infconsulta.html',lsConsulta = conCon)
+
+@app.route('/infconsultaEditar/<id>')
+def infconsultaEditar(id):
+    if current_user:
+        id_paciente = current_user.id
+    consulta= mysql.connect.cursor()
+    consulta.execute('select Consultas.id,personas.nombre, personas.ap,personas.am,pacientes.nss,TIMESTAMPDIFF(YEAR, personas.fecha_nac, CURDATE()),pacientes.estatura,pacientes.peso, consultas.sintomas,consultas.diagnostico,consultas.medicoVerifica from consultas inner join pacientes on pacientes.id = consultas.id_paciente inner join personas on pacientes.id_persona = personas.id where consultas.id = %s;', (id,))
+    conCon= consulta.fetchall()
+    #print(conAlbums)
+    
+    return render_template('infconsulta.html',lsConsulta = conCon)
 
 
 @app.route('/nuevaconsulta')

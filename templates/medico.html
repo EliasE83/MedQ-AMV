@@ -3,15 +3,123 @@
 {% block body%}
 <header id="header" class="header w-100">
     <div class="header__top w-100">
-        <img src="https://www.imss.gob.mx/sites/all/statics/styles/flexslider_full/public/i2f_news/IMG_6850.jpg?itok=BIQa1uhh"
-            alt="xand-hero-background" id="header-img">
-        <span class="header__top-text text-center">
-            MedQ Asistente Virtual
-            La manera más eficiente de cuidar tu salud
-            Bienvenido DOCTOR
-        </span>
     </div>
 </header>
+<div class="flex justify-center px-16">
+    <div class="container">
+        <div class="overflow-x-auto">
+          <!-- Div para citas pendientes -->
+          <div class="mb-4">
+            
+            <h2 class="text-xl font-semibold mb-2">Tickets de consultas virtuales</h2>
+            
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead class="text-center">
+            <tr>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Folio
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Doctor
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                ID Consulta
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Fecha
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Hora
+              </th>
+              <th class="px-4 py-2"></th>
+            </tr>
+          </thead>
+      
+          <tbody class="text-center divide-y divide-gray-200">
+            {% for cita in lsConsulta %}
+                      <tr>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[0] }}</td>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                          <td><a href="/infconsulta/{{cita.0}}" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                      </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+          </div>
+      
+          <!-- Div para historial de citas -->
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Historial de consultas virtuales</h2>
+            <button
+              id="toggleHistorial"
+              class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+            >
+              Mostrar Historial
+            </button>
+            <div id="historialTable" class="hidden">
+              
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+          <thead class="text-center">
+            <tr>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Folio
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Doctor
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                ID Consulta
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Fecha
+              </th>
+              <th class="px-4 py-2 font-medium text-gray-900">
+                Hora
+              </th>
+              <th class="px-4 py-2"></th>
+            </tr>
+          </thead>
+      
+          <tbody class="text-center divide-y divide-gray-200">
+            {% for cita in lsCon %}
+                      <tr>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[0] }}</td>
+                          <td class="px-4 py-2 text-gray-700">{{ cita[1] }} {{ cita[2] }} {{ cita[3] }}</td> <!-- Doctor -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[4] }}</td> <!-- ID Consultorio -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[5] }}</td> <!-- Fecha -->
+                          <td class="px-4 py-2 text-gray-700">{{ cita[6] }}</td> <!-- Hora -->
+                          <td><a href="/infconsulta" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
+                      </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        // Script para ocultar/mostrar el historial al hacer clic en el botón
+        const toggleButton = document.getElementById("toggleHistorial");
+        const historialTable = document.getElementById("historialTable");
+      
+        toggleButton.addEventListener("click", () => {
+          historialTable.classList.toggle("hidden");
+          if (historialTable.classList.contains("hidden")) {
+            toggleButton.textContent = "Mostrar Historial";
+          } else {
+            toggleButton.textContent = "Ocultar Historial";
+          }
+        });
+      </script>
+    </div>
 
   
 {% endblock %}
