@@ -159,7 +159,9 @@ def consultas():
     ConCon1= consulta.fetchall()
     return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
 
-
+@app.route('/infconsulta')
+def infconsulta():
+    return render_template('infconsulta.html')
 
 @app.route('/perfil')
 def perfil():
