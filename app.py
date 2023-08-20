@@ -342,7 +342,68 @@ def reimprimir(id):
     else:
         buffer.close()
         return "Error generando el PDF"    
+    
+@app.route('/indexU')
+def indexU():
+    return render_template('user.html')
 
+@app.route('/indexM')
+def indexM():
+    return render_template('med.html')
+
+@app.route('/historicoreg')
+def historicoreg():
+    return render_template('historicoreg.html')
+
+@app.route('/indexA')
+def indexA():
+    return render_template('admin.html')
+
+
+@app.route('/admm')
+def adm():
+    cs = mysql.connection.cursor()
+    cs.execute('select p.id, p.nombre, p.ap, p.am, g.descripcion, p.fecha_nac, p.telefono, p.correo, p.contra from personas p inner join generos g on p.id_genero = g.id where id_estatus=1')
+    medico = cs.fetchall()
+    return render_template('addmed.html', listmedico = medico)
+
+@app.route('/admmed')
+def medicaadm():
+    cs = mysql.connection.cursor()
+    cs.execute('select p.id, p.nombre, p.ap, p.am, g.descripcion, p.fecha_nac, p.telefono, p.correo, p.contra from personas p inner join generos g on p.id_genero = g.id where id_estatus=1')
+    medico = cs.fetchall()
+    return render_template('addmed.html', listmedico = medico)
+
+@app.route('/edit/<id>')
+def edit(id):
+    CS = mysql.connection.cursor()
+    CS.execute('SELECT id, nombre, ap, am, id_genero, fecha_nac, telefono, correo, contra FROM personas WHERE id = %s',(id,))
+    QueryId = CS.fetchone()
+    print (QueryId)
+    return render_template('editadm.html',listId = QueryId)
+
+
+
+@app.route('/update/<id>', methods=['POST'])
+def update(id):
+    if request.method == 'POST':
+        varNombre = request.form['txtNombre']
+        varApellidoPaterno = request.form['txtApellidoPaterno']
+        varApellidoMaterno = request.form['txtApellidoMaterno']
+        varGenero = request.form['txtGenero']
+        varFechaNac = request.form['txtFechaNac']
+        varTelefono = request.form['txtTelefono']
+        varCorreo = request.form['txtCorreo']
+        varContra = request.form['txtContra']
+
+        UpdCur =  mysql.connection.cursor()
+        UpdCur.execute('UPDATE personas SET nombre = %s, ap = %s, am = %s, id_genero = %s, fecha_nac = %s, telefono = %s, correo = %s, contra = %s WHERE id = %s',
+                       (varNombre, varApellidoPaterno, varApellidoMaterno, varGenero, varFechaNac, varTelefono, varCorreo, varContra, id))
+        mysql.connection.commit()
+        UpdCur.close()
+
+    flash('La persona fue actualizada correctamente')
+    return redirect(url_for('medicaadm'))
 
 
 #Ejecucion del Servidor en el puerto 5000

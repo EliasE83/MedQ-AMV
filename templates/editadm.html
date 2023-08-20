@@ -1,0 +1,54 @@
+{% extends 'dashboardA.html' %}
+
+{% block body%}
+
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mb-4">Persona a editar</h1>
+        <form action="/update/{{listId[0]}}" method="POST" class="border p-4 rounded">
+          <div class="form-group">
+            <label for="txtNombre">Nombre:</label>
+            <input type="text" name="txtNombre" class="form-control" value="{{listId[1]}}" required>
+          </div>
+          <div class="form-group">
+            <label for="txtApellidoPaterno">Apellido Paterno:</label>
+            <input type="text" name="txtApellidoPaterno" class="form-control" value="{{listId[2]}}" required>
+          </div>
+          <div class="form-group">
+            <label for="txtApellidoMaterno">Apellido Materno:</label>
+            <input type="text" name="txtApellidoMaterno" class="form-control" value="{{listId[3]}}" required>
+          </div>
+          <div class="form-group">
+            <label for="txtGenero">Género:</label>
+            <select name="txtGenero" class="form-control" required>
+              <option value="1" {% if listId[4] == 1 %}selected{% endif %}>Hombre</option>
+              <option value="2" {% if listId[4] == 2 %}selected{% endif %}>Mujer</option>
+              <option value="3" {% if listId[4] == 3 %}selected{% endif %}>Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="txtFechaNac">Fecha de Nacimiento:</label>
+            <input type="date" name="txtFechaNac" class="form-control" value="{{listId[5]}}" required>
+          </div>
+          <div class="form-group">
+            <label for="txtTelefono">Teléfono:</label>
+            <input type="text" name="txtTelefono" class="form-control" value="{{listId[6]}}" required>
+          </div>
+          <div class="form-group">
+            <label for="txtCorreo">Correo:</label>
+            <input type="email" name="txtCorreo" class="form-control" value="{{listId[7]}}" required>
+          </div>
+          <div class="form-group">
+            <label for="txtContra">Contraseña:</label>
+            <input type="password" name="txtContra" class="form-control" value="{{listId[8]}}" required>
+          </div>
+          <button type="submit" name="action" value="update" class="btn btn-primary mt-3">Actualizar</button>
+          <a href="/" class="btn btn-danger mt-3"><i class="bi bi-x-circle-fill"></i></a>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

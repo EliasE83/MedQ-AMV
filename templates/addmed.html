@@ -39,22 +39,23 @@
   
       <tbody class="text-center divide-y divide-gray-200">
         {% for medico in listmedico %}
-                  <tr>
-                      <td class="px-4 py-2 text-gray-700">{{ medico[0] }}</td> <!-- ID -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[1] }}</td> <!-- Nombre -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[2] }}</td> <!-- Apellido Paterno -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[3] }}</td> <!-- Apellido Materno -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[4] }}</td> <!-- Género -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[5] }}</td> <!-- Fecha de Nacimiento -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[6] }}</td> <!-- Teléfono -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[7] }}</td> <!-- Correo -->
-                      <td class="px-4 py-2 text-gray-700">{{ medico[8] }}</td> <!-- Contraseña -->
-                      <td><a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">View</a></td>
-                  </tr>
+            <tr>
+                <td class="px-4 py-2 text-gray-700">{{ medico[0] }}</td> <!-- ID -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[1] }}</td> <!-- Nombre -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[2] }}</td> <!-- Apellido Paterno -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[3] }}</td> <!-- Apellido Materno -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[4] }}</td> <!-- Género -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[5] }}</td> <!-- Fecha de Nacimiento -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[6] }}</td> <!-- Teléfono -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[7] }}</td> <!-- Correo -->
+                <td class="px-4 py-2 text-gray-700">{{ medico[8] }}</td> <!-- Contraseña -->
+                <td>
+                  <a href="/edit/{{ medico[0] }}" class="btn btn-primary">Editar</a>
+                </td>
+            </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-
 
 {% endblock %}
