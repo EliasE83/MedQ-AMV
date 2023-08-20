@@ -180,7 +180,17 @@ def perfil():
     queryUsr = cs.fetchall()
     return render_template('Uperfil.html', listUsr=queryUsr)
 
-
+@app.route('/infconsulta')
+def infconsulta():
+    if current_user:
+        id_paciente = current_user.id
+    consulta= mysql.connect.cursor()
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
+    conCon= consulta.fetchall()
+    #print(conAlbums)
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
+    ConCon1= consulta.fetchall()
+    return render_template('infconsulta.html',lsConsulta = conCon,lsCon = ConCon1)
 
 
 @app.route('/nuevaconsulta')
