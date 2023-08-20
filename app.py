@@ -119,28 +119,16 @@ def historicoreg():
     return render_template('historicoreg.html')
 
 @app.route('/indexA')
-def usuarios():
+def indexA():
     return render_template('admin.html')
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 @app.route('/admmed')
 def medicaadm():
     cs = mysql.connection.cursor()
     cs.execute('select p.id, p.nombre, p.ap, p.am, g.descripcion, p.fecha_nac, p.telefono, p.correo, p.contra from personas p inner join generos g on p.id_genero = g.id where id_estatus=1')
     medico = cs.fetchall()
-    return render_template('citas.html', listmedico = medico)
-<<<<<<< Updated upstream
-=======
-
-
-
-
-
-
->>>>>>> Stashed changes
+    return render_template('addmed.html', listmedico = medico)
 
 @app.route('/citas')
 def citas():
