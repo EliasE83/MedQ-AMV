@@ -1,8 +1,32 @@
 #Importar el framework
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_file, Response
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user,login_required, logout_user, current_user,UserMixin
 from datetime import datetime
+from flask_login import LoginManager, login_required, login_user, logout_user
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Flowable, PageBreak
+from reportlab.lib.styles import getSampleStyleSheet
+from io import BytesIO
+from xhtml2pdf import pisa
+import openai
+
+
+
+openai.api_key = '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'
+
+def get_completion(prompt, model="gpt-3.5-turbo"):
+    messages = [{"role": "user", "content": prompt}]
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message["content"]
+
+
+
 
 #Inicializacion del APP
 app = Flask(__name__)
@@ -37,7 +61,7 @@ def load_user(id):
     print("este es mi id: " + id)
     
     cursor = mysql.connection.cursor() 
-    cursor.execute('SELECT id, correo, contra, id_estatus, nombre FROM Personas WHERE id = %s', (id,))
+    cursor.execute('SELECT Pacientes.id, Personas.correo, Personas.contra, Personas.id_estatus, Personas.nombre FROM Personas inner join Pacientes on Pacientes.id_persona = Personas.id WHERE Pacientes.id = %s', (id,))
     persona = cursor.fetchone()
     if persona:
         print("Metodo: load_user(id), el usuario si coincide.")
@@ -63,7 +87,7 @@ def log():
         password = request.form['txtContra']
 
         cursor = mysql.connection.cursor()
-        query = 'SELECT id, correo, contra, id_estatus,nombre FROM Personas WHERE correo = %s and contra = %s'
+        query = 'SELECT Pacientes.id, Personas.correo, Personas.contra, Personas.id_estatus,Personas.nombre FROM Personas inner join Pacientes on Pacientes.id_persona = Personas.id WHERE Personas.correo = %s and Personas.contra = %s'
         cursor.execute(query, (rfc, password))
         persona = cursor.fetchone()
         if persona:
@@ -112,23 +136,15 @@ def indexU():
 
 @app.route('/indexM')
 def indexM():
-    return render_template('medico.html')
+    return render_template('med.html')
 
 @app.route('/historicoreg')
 def historicoreg():
     return render_template('historicoreg.html')
 
 @app.route('/indexA')
-def indexA():
-    return render_template('admin.html')
-
-
-@app.route('/admmed')
-def medicaadm():
-    cs = mysql.connection.cursor()
-    cs.execute('select p.id, p.nombre, p.ap, p.am, g.descripcion, p.fecha_nac, p.telefono, p.correo, p.contra from personas p inner join generos g on p.id_genero = g.id where id_estatus=1')
-    medico = cs.fetchall()
-    return render_template('addmed.html', listmedico = medico)
+def usuarios():
+    return render_template('usuarios.html')
 
 @app.route('/citas')
 def citas():
@@ -136,12 +152,9 @@ def citas():
         id_paciente = current_user.id
     
     cs = mysql.connection.cursor()
-    cs.execute('select Pacientes.id from Pacientes inner join Personas on Personas.id = Pacientes.id_persona where Personas.id = '+str(id_paciente))
-    var = cs.fetchone()
-
-    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente =%s',(var))
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
     queryCitas = cs.fetchall()
-    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente =%s',(var))
+    cs.execute('select c.folio, p.nombre,p.ap, p.am, c.id_consultorio, c.fecha_agendada, c.hora_cita from citas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
     queryCitas0 = cs.fetchall()
     return render_template('citas.html', listCitas = queryCitas, listCitas0 = queryCitas0)
 
@@ -150,24 +163,20 @@ def consultas():
     if current_user:
         id_paciente = current_user.id
     consulta= mysql.connect.cursor()
-    consulta.execute('select Pacientes.id from Pacientes inner join Personas on Personas.id = Pacientes.id_persona where Personas.id = '+str(id_paciente))
-    var = consulta.fetchone()
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente =%s',(var))
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 1 and c.id_paciente ='+str(id_paciente))
     conCon= consulta.fetchall()
     #print(conAlbums)
-    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente =%s',(var))
+    consulta.execute('select c.id, p.nombre,p.ap,p.am, c.id, c.fecha_consulta, c.Hora from consultas c inner join medicos m on c.id_doctor = m.id inner join personas p on m.id_persona = p.id where c.estatus = 0 and c.id_paciente ='+str(id_paciente))
     ConCon1= consulta.fetchall()
     return render_template('consultas.html',lsConsulta = conCon,lsCon = ConCon1)
 
-@app.route('/infconsulta')
-def infconsulta():
-    return render_template('infconsulta.html')
+
 
 @app.route('/perfil')
 def perfil():
     id_paciente = current_user.id
     cs = mysql.connection.cursor()
-    cs.execute('SELECT nombre,ap,am, TIMESTAMPDIFF(YEAR, fecha_nac, CURDATE()), correo FROM personas WHERE id= %s', (id_paciente,))
+    cs.execute('SELECT p.nombre,p.ap,p.am, TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()), p.correo FROM personas p INNER JOIN pacientes pa on pa.id_persona = p.id WHERE pa.id= %s', (id_paciente,))
     queryUsr = cs.fetchall()
     return render_template('Uperfil.html', listUsr=queryUsr)
 
@@ -193,17 +202,96 @@ def nuevaconsultaBD():
         vTipoDolor=request.form['tipodolor']
         vNivelDolor=request.form['niveldolor']    
         vZona=request.form['zona']
-        cs.execute('insert into Consultas(id_paciente,id_zona,sintomas,tipo_dolor,nivel_dolor,fecha_consulta,alergias,antecedentes,Hora,estatus) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,1)',
-        (id_paciente,vZona,vSintomas,vTipoDolor,vNivelDolor,vFecha,vAlergias,vAntecedentes,vHora))
+
+        cs.execute('select descripcion from zonacuerpos where id = %s;', (vZona,))
+        vZonaC = cs.fetchone()
+
+
+        prompt = "Imagina que eres un medico, es importante que NO me recalques que no eres un medico a la hora de darme tu respuesta, tengo los siguientes sintomas: "+vSintomas+" tengo un dolor "+vTipoDolor+" en la zona "+vZonaC[0]+" y mi nivel de dolor es "+vNivelDolor+" de 10, tengo las siguientes alergias: "+vAlergias+" y mis antecedentes son: "+vAntecedentes+" ¿Que me recomiendas?. Reitero, porfavor no me recalques que no eres un medico real, solo quiero que me des una respuesta como si fueras un medico real."
+        response = get_completion(prompt)
+        print(response) 
+
+        cs.execute('insert into Consultas(id_paciente,id_zona,sintomas,tipo_dolor,nivel_dolor,fecha_consulta,alergias,antecedentes,Hora,estatus, diagnostico) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,1,%s)',
+        (id_paciente,vZona,vSintomas,vTipoDolor,vNivelDolor,vFecha,vAlergias,vAntecedentes,vHora,response))
         mysql.connection.commit()
+
+        
+
+
+    cur = mysql.connection.cursor()
+    cur.execute('select personas.nombre, personas.ap,personas.am,zonacuerpos.descripcion, sintomas, tipo_dolor, alergias, antecedentes, fecha_consulta, Hora from consultas inner join pacientes on pacientes.id = consultas.id_paciente inner join personas on pacientes.id_persona = personas.id inner join zonacuerpos on zonacuerpos.id = consultas.id_zona where consultas.id = %s;', (id_paciente,))
+    data = cur.fetchall()
+    cur.close()
+
+    #return render_template('Medico/receta.html', pacientes = data)
+
+    html_content = render_template('receta.html', pacientes=data, respuesta=response)
+
+    response = Response(content_type='application/pdf')
+    response.headers['Content-Disposition'] = 'inline; filename=receta.pdf'
+
+    buffer = BytesIO()
+
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    story = []
+
+    # Convertir el HTML a PDF utilizando xhtml2pdf
+    result = pisa.CreatePDF(html_content, dest=buffer)
+
+    if not result.err:
+        pdf_data = buffer.getvalue()
+        buffer.close()
+
+        response.data = pdf_data
+        return response
+    else:
+        buffer.close()
+        return "Error generando el PDF"
+""" 
     flash('El registro fue agregado correctamente')
     return redirect(url_for('nuevaconsulta'))
-    
+     """
 
 
 @app.route('/guardar')
 def guardar():
     return render_template('nuevaconsulta.html')
+
+@app.route('/reimprimir/<id>')
+def reimprimir(id):
+    if current_user:
+        id_paciente = current_user.id
+
+    cur = mysql.connection.cursor()
+    cur.execute('select personas.nombre, personas.ap,personas.am,zonacuerpos.descripcion, sintomas, tipo_dolor, alergias, antecedentes, fecha_consulta, Hora from consultas inner join pacientes on pacientes.id = consultas.id_paciente inner join personas on pacientes.id_persona = personas.id inner join zonacuerpos on zonacuerpos.id = consultas.id_zona where consultas.id = %s;', (id,))
+    data = cur.fetchall()
+    cur.execute('select diagnostico from consultas where id = %s;', (id,))
+    data2 = cur.fetchone()
+
+    #return render_template('Medico/receta.html', pacientes = data)
+
+    html_content = render_template('receta.html', pacientes=data, respuesta=data2[0])
+
+    response = Response(content_type='application/pdf')
+    response.headers['Content-Disposition'] = 'inline; filename=receta.pdf'
+
+    buffer = BytesIO()
+
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    story = []
+
+    # Convertir el HTML a PDF utilizando xhtml2pdf
+    result = pisa.CreatePDF(html_content, dest=buffer)
+
+    if not result.err:
+        pdf_data = buffer.getvalue()
+        buffer.close()
+
+        response.data = pdf_data
+        return response
+    else:
+        buffer.close()
+        return "Error generando el PDF"    
 
 
 
